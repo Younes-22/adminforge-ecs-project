@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "github_ecr" {
 
 resource "aws_iam_policy" "github_ecr" {
   name        = "${var.project_name}-github-ecr-policy"
-  description = "Permissions for GitHub Actions to push the Admin Forge image to ECR"
+  description = "Permissions for GitHub Actions to push the Memos image to ECR"
   policy      = data.aws_iam_policy_document.github_ecr.json
 }
 

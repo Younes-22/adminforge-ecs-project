@@ -19,7 +19,7 @@ data "aws_iam_policy_document" "github_actions_trust" {
       variable = "token.actions.githubusercontent.com:sub"
 
       values = [
-        "repo:${var.github_owner}/${var.github_repo}:ref:refs/heads/main"
+        "repo:Younes-22@124288775/adminforge-ecs-project@1270373489:ref:refs/heads/main"
       ]
     }
   }
