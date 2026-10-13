@@ -1,3 +1,4 @@
+
 variable "vpc_id" {
   description = "VPC ID for the ALB"
   type        = string
@@ -11,4 +12,34 @@ variable "public_subnet_ids" {
 variable "certificate_arn" {
   description = "ARN of the ACM certificate"
   type        = string
+}
+
+variable "alb_name" {
+  description = "Name of the application load balancer"
+  type        = string
+  default     = "ecs-alb"
+}
+
+variable "http_port" {
+  description = "HTTP listener port"
+  type        = number
+  default     = 80
+}
+
+variable "https_port" {
+  description = "HTTPS listener port"
+  type        = number
+  default     = 443
+}
+
+variable "app_port" {
+  description = "Port the application listens on"
+  type        = number
+  default     = 8081
+}
+
+variable "health_check_path" {
+  description = "Application health check endpoint"
+  type        = string
+  default     = "/healthz"
 }
