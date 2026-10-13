@@ -19,7 +19,7 @@ jobs:
     env:
       AWS_REGION: eu-west-2
       TF_VAR_domain_name: younesblog.org
-      TF_VAR_container_image: 872450837551.dkr.ecr.eu-west-2.amazonaws.com/my-memos-app:latest
+      TF_VAR_container_image: 872450837551.dkr.ecr.eu-west-2.amazonaws.com/my-adminforge-app:latest
     steps:
 
       - name: checkout repository
@@ -28,7 +28,7 @@ jobs:
       - name: configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
-          role-to-assume: arn:aws:iam::872450837551:role/memos-github-terraform-role
+          role-to-assume: ${{ secrets.tf_AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: setup Terraform
