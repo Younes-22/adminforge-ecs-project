@@ -46,6 +46,7 @@ jobs:
           scan-type: fs
           scan-ref: ./terraform
           scanners: misconfig
+          trivyignores: ./.trivyignore.yaml
           format: table
           severity: HIGH,CRITICAL
           exit-code: '1'

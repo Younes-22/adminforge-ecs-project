@@ -1,0 +1,3 @@
+misconfigurations:
+  - id: AWS-0053
+    statement: "The ALB must be publicly accessible for users to reach AdminForge."
