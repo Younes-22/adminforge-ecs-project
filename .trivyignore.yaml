@@ -1,3 +1,8 @@
 misconfigurations:
   - id: AWS-0053
     statement: "The ALB must be publicly accessible for users to reach AdminForge."
+  
+  - id: AWS-0104
+    paths:
+      - "modules/ecs/main.tf"
+    statement: "AdminForge requires outbound HTTPS to external RDAP services and user-supplied URLs. Egress is restricted to TCP port 443; destination IPs remain unrestricted to support these features."
