@@ -47,15 +47,15 @@ resource "aws_ecs_task_definition" "this" {
 
   container_definitions = jsonencode([
     {
-      name = var.container_name
-      image = var.container_image
+      name      = var.container_name
+      image     = var.container_image
       essential = true
 
       portMappings = [
         {
           containerPort = var.container_port
-          hostPort = var.container_port
-          protocol = "tcp"
+          hostPort      = var.container_port
+          protocol      = "tcp"
         }
       ]
     }
@@ -63,15 +63,15 @@ resource "aws_ecs_task_definition" "this" {
 }
 
 resource "aws_ecs_service" "memos" {
-  name = var.service_name
-  cluster = aws_ecs_cluster.this.id
+  name            = var.service_name
+  cluster         = aws_ecs_cluster.this.id
   task_definition = aws_ecs_task_definition.this.arn
-  desired_count = var.desired_count
-  launch_type = "FARGATE"
+  desired_count   = var.desired_count
+  launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = var.private_subnet_ids
-    security_groups = [aws_security_group.ecs_tasks.id]
+    subnets          = var.private_subnet_ids
+    security_groups  = [aws_security_group.ecs_tasks.id]
     assign_public_ip = false
   }
 
@@ -82,9 +82,9 @@ resource "aws_ecs_service" "memos" {
   }
 }
 
-resource "aws_ecr_repository" "memos" {
+resource "aws_ecr_repository" "admin_forge" {
   name                 = var.ecr_repository_name
-  image_tag_mutability = "MUTABLE"
+  image_tag_mutability = "IMMUTABLE"
 
   image_scanning_configuration {
     scan_on_push = true

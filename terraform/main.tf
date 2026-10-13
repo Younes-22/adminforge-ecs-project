@@ -16,7 +16,6 @@ module "ecs" {
   execution_role_arn = module.iam.ecs_task_execution_role_arn
   container_image    = var.container_image
 
-
 }
 
 module "iam" {

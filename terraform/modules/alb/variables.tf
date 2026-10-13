@@ -35,7 +35,7 @@ variable "https_port" {
 variable "app_port" {
   description = "Port the application listens on"
   type        = number
-  default     = 8081
+  default     = 8080
 }
 
 variable "health_check_path" {

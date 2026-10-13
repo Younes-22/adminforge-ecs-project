@@ -20,10 +20,10 @@ resource "aws_security_group" "alb_sg" {
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow traffic to ECS tasks"
+    from_port   = var.app_port
+    to_port     = var.app_port
+    protocol    = "tcp"
   }
 
   tags = {
@@ -62,11 +62,12 @@ resource "aws_lb_listener" "http" {
 }
 
 resource "aws_lb" "this" {
-  name               = var.alb_name
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb_sg.id]
-  subnets            = var.public_subnet_ids
+  name                       = var.alb_name
+  internal                   = false
+  load_balancer_type         = "application"
+  security_groups            = [aws_security_group.alb_sg.id]
+  subnets                    = var.public_subnet_ids
+  drop_invalid_header_fields = true
 
   enable_deletion_protection = false
 
