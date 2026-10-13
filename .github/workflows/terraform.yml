@@ -32,13 +32,13 @@ jobs:
       AWS_REGION: eu-west-2
       TF_VAR_domain_name: younesblog.org
       ECR_REPOSITORY: my-adminforge-app
-      IMAGE_SHA: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+      IMAGE_SHA: ${{ github.sha }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
-          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          ref: main
       
       - name: Scan Terraform configuration with Trivy
         uses: aquasecurity/trivy-action@v0.36.0
