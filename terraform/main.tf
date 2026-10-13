@@ -3,14 +3,19 @@ module "vpc" {
 }
 
 module "ecs" {
-  source = "./modules/ecs"
-  vpc_id = module.vpc.vpc_id
+  source                = "./modules/ecs"
+  vpc_id                = module.vpc.vpc_id
   alb_security_group_id = module.alb.alb_security_group_id
-  private_subnet_1_id = module.vpc.private_subnet_1_id
-  private_subnet_2_id = module.vpc.private_subnet_2_id
-  target_group_arn = module.alb.target_group_arn
+
+  private_subnet_ids = [
+    module.vpc.private_subnet_1_id,
+    module.vpc.private_subnet_2_id
+  ]
+
+  target_group_arn   = module.alb.target_group_arn
   execution_role_arn = module.iam.ecs_task_execution_role_arn
-  container_image = var.container_image
+  container_image    = var.container_image
+
 
 }
 
@@ -19,7 +24,10 @@ module "iam" {
 }
 
 module "route53" {
-  source = "./modules/route53"
+  source       = "./modules/route53"
+  zone_id      = module.route53.zone_id
+  alb_dns_name = module.alb.alb_dns_name
+  alb_zone_id  = module.alb.alb_zone_id
 }
 
 module "acm" {
@@ -40,12 +48,4 @@ module "alb" {
   ]
 
   certificate_arn = module.acm.certificate_arn
-}
-
-module "dns" {
-  source = "./modules/dns"
-
-  zone_id = module.route53.zone_id
-  alb_dns_name = module.alb.alb_dns_name
-  alb_zone_id  = module.alb.alb_zone_id
 }
