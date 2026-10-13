@@ -1,0 +1,3 @@
+# AdminForge requires a public ALB so users can access the application. 
+# Inbound access is controlled by the ALB security group. 
+# AWS-0053: Public load balancer is intentional. AWS-0053
