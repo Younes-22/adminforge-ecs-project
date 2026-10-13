@@ -52,7 +52,7 @@ jobs:
       - name: Scan Docker image with Trivy
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: memos-app:${{ github.sha }}
+          image-ref: adminforge-app:${{ github.sha }}
           format: table
           exit-code: '1'
           ignore-unfixed: true
@@ -63,7 +63,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker tag "memos-app:${GITHUB_SHA}" \
+          docker tag "adminforge-app:${GITHUB_SHA}" \
             "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GITHUB_SHA}"
 
           docker push "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GITHUB_SHA}"
