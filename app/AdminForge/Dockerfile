@@ -50,3 +50,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
 
 # Start the application
 ENTRYPOINT ["dotnet", "AdminForge.Web.dll"]
+
