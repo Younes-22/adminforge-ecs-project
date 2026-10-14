@@ -57,6 +57,18 @@ jobs:
           role-to-assume: ${{ secrets.tf_AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Get image commit IMAGE_SHA
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            IMAGE_SHA=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}" --jq '.head_sha')
+          else
+            IMAGE_SHA=$(git rev-parse HEAD)
+          fi
+          echo "IMAGE_SHA=$IMAGE_SHA" >> "$GITHUB_ENV"
+
       - name: Get AWS account ID
         run: |
           AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)

@@ -2,6 +2,9 @@ data "aws_caller_identity" "current" {}
 
 locals {
   ecr_repository_arn = "arn:aws:ecr:eu-west-2:${data.aws_caller_identity.current.account_id}:repository/${var.ecr_repository_name}"
+
+  terraform_state_bucket = "adminforge-terraform-state-872450837551-eu-west-2"
+  terraform_state_key    = "adminforge/terraform.tfstate"
 }
 
 # ECR role
@@ -123,13 +126,9 @@ data "aws_iam_policy_document" "github_terraform" {
   }
 
   statement {
-    sid    = "ManageLogs"
-    effect = "Allow"
-
-    actions = [
-      "logs:*"
-    ]
-
+    sid       = "ManageLogs"
+    effect    = "Allow"
+    actions   = ["logs:*"]
     resources = ["*"]
   }
 
@@ -164,11 +163,34 @@ data "aws_iam_policy_document" "github_terraform" {
 
     resources = ["*"]
   }
+
+  statement {
+    sid       = "AccessTerraformStateBucket"
+    effect    = "Allow"
+    actions   = ["s3:ListBucket"]
+    resources = ["arn:aws:s3:::${local.terraform_state_bucket}"]
+  }
+
+  statement {
+    sid    = "AccessTerraformStateObject"
+    effect = "Allow"
+
+    actions = [
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:DeleteObject"
+    ]
+
+    resources = [
+      "arn:aws:s3:::${local.terraform_state_bucket}/${local.terraform_state_key}",
+      "arn:aws:s3:::${local.terraform_state_bucket}/${local.terraform_state_key}.tflock"
+    ]
+  }
 }
 
 resource "aws_iam_policy" "github_terraform" {
   name        = "${var.project_name}-github-terraform-policy"
-  description = "Permissions for GitHub Actions to deploy the Admin Forge infrastructure"
+  description = "Permissions for GitHub Actions to deploy the Memos infrastructure"
   policy      = data.aws_iam_policy_document.github_terraform.json
 }
 
