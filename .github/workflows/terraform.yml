@@ -57,17 +57,21 @@ jobs:
           role-to-assume: ${{ secrets.tf_AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Get image commit IMAGE_SHA
+      - name: Get image commit SHA
         env:
-          GH_TOKEN: ${{ github.token }}
-          RUN_ID: ${{ github.event.workflow_run.id }}
+          WORKFLOW_RUN_SHA: ${{ github.event.workflow_run.head_sha }}
+          DISPATCH_SHA: ${{ github.sha }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_run" ]; then
-            IMAGE_SHA=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${RUN_ID}" --jq '.head_sha')
-          else
-            IMAGE_SHA=$(git rev-parse HEAD)
-          fi
+          IMAGE_SHA="${WORKFLOW_RUN_SHA:-$DISPATCH_SHA}"
+
+          aws ecr describe-images \
+            --repository-name "$ECR_REPOSITORY" \
+            --region "$AWS_REGION" \
+            --image-ids "imageTag=$IMAGE_SHA" \
+            > /dev/null
+
           echo "IMAGE_SHA=$IMAGE_SHA" >> "$GITHUB_ENV"
+          echo "Verified image tag exists: $IMAGE_SHA"
 
       - name: Get AWS account ID
         run: |
