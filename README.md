@@ -6,7 +6,7 @@ The project focuses on Infrastructure as Code, secure CI/CD, automated deploymen
 
 ## Architecture
 
-![AdminForge AWS Architecture](./docs/docs/ECS-Diagram.drawio.png)
+![AdminForge AWS Architecture](./docs/ECS-Diagram.drawio.png)
 
 **Request flow:** Cloudflare DNS → Route 53 → Application Load Balancer → ECS Fargate.
 
@@ -16,11 +16,11 @@ The application runs in private subnets across two Availability Zones. Terraform
 
 ![AdminForge application](./docs/adminforge.png)
 
-![Build and Push workflow](./docs/build-and-push-workflow.png)
+![Build and Push workflow](./docs/build-and-push.png)
 
-![Terraform deployment workflow](./docs/docs/tf-deploy.png)
+![Terraform deployment workflow](./docs/tf-deploy.png)
 
-![Infrastructure teardown workflow](./docs/docs/tf-destroy.png)
+![Infrastructure teardown workflow](./docs/tf-destroy.png)
 
 ## What I Built
 
