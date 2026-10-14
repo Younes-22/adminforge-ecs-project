@@ -43,3 +43,14 @@ variable "health_check_path" {
   type        = string
   default     = "/healthz"
 }
+
+# variable "task_security_group_id" {
+#   description = "Security group ID of the ECS tasks"
+#   type        = string
+# }
+
+variable "vpc_cidr" {
+  description = "CIDR block of the VPC containing the ECS tasks"
+  type        = string
+  default = "10.0.0.0/16"
+}

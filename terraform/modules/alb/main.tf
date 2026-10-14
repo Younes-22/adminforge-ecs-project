@@ -20,10 +20,11 @@ resource "aws_security_group" "alb_sg" {
   }
 
   egress {
-    description = "Allow traffic to ECS tasks"
-    from_port   = var.app_port
-    to_port     = var.app_port
-    protocol    = "tcp"
+    description     = "Allow traffic to ECS tasks"
+    from_port       = var.app_port
+    to_port         = var.app_port
+    protocol        = "tcp"
+    cidr_blocks = [var.vpc_cidr]
   }
 
   tags = {

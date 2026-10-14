@@ -45,6 +45,7 @@ module "alb" {
     module.vpc.public_subnet_1_id,
     module.vpc.public_subnet_2_id
   ]
-
-  certificate_arn = module.acm.certificate_arn
+vpc_cidr = var.vpc_cidr
+  
+  certificate_arn        = module.acm.certificate_arn
 }

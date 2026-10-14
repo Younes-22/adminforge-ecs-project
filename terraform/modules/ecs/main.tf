@@ -52,6 +52,15 @@ resource "aws_ecs_task_definition" "this" {
       image     = var.container_image
       essential = true
 
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.app.name
+          "awslogs-region"        = "eu-west-2"
+          "awslogs-stream-prefix" = "app"
+        }
+      }
+
       portMappings = [
         {
           containerPort = var.container_port
@@ -85,4 +94,13 @@ resource "aws_ecs_service" "memos" {
 
 data "aws_ecr_repository" "admin_forge" {
   name = var.ecr_repository_name
+}
+
+resource "aws_cloudwatch_log_group" "app" {
+  name              = "/ecs/adminforge-app"
+  retention_in_days = 7
+
+  tags = {
+    Name = "adminforge-app-logs"
+  }
 }
