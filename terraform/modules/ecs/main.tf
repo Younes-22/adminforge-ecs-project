@@ -83,15 +83,6 @@ resource "aws_ecs_service" "memos" {
   }
 }
 
-resource "aws_ecr_repository" "admin_forge" {
-  name                 = var.ecr_repository_name
-  image_tag_mutability = "IMMUTABLE"
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-
-  tags = {
-    Name = var.ecr_repository_name
-  }
+data "aws_ecr_repository" "admin_forge" {
+  name = var.ecr_repository_name
 }
