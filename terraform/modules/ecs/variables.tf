@@ -38,7 +38,7 @@ variable "cluster_name" {
 variable "service_name" {
   description = "ECS service name"
   type        = string
-  default     = "memos-service"
+  default     = "adminforge-service"
 }
 
 variable "task_security_group_name" {
@@ -50,7 +50,7 @@ variable "task_security_group_name" {
 variable "container_name" {
   description = "Name of the application container"
   type        = string
-  default     = "memos"
+  default     = "adminforge"
 }
 
 variable "ecr_repository_name" {

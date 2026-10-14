@@ -10,7 +10,7 @@ variable "github_repo" {
 
 variable "project_name" {
   type    = string
-  default = "memos"
+  default = "adminforge"
 }
 
 variable "ecr_repository_name" {

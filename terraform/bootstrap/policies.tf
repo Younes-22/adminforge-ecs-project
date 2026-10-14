@@ -39,7 +39,7 @@ data "aws_iam_policy_document" "github_ecr" {
 
 resource "aws_iam_policy" "github_ecr" {
   name        = "${var.project_name}-github-ecr-policy"
-  description = "Permissions for GitHub Actions to push the Memos image to ECR"
+  description = "Permissions for GitHub Actions to push the Admin Forge image to ECR"
   policy      = data.aws_iam_policy_document.github_ecr.json
 }
 
@@ -190,7 +190,7 @@ data "aws_iam_policy_document" "github_terraform" {
 
 resource "aws_iam_policy" "github_terraform" {
   name        = "${var.project_name}-github-terraform-policy"
-  description = "Permissions for GitHub Actions to deploy the Memos infrastructure"
+  description = "Permissions for GitHub Actions to deploy the Admin Forge infrastructure"
   policy      = data.aws_iam_policy_document.github_terraform.json
 }
 
